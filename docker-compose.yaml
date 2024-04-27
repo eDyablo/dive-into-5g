@@ -1,0 +1,9 @@
+version: '3'
+services:
+  terminal:
+    build:
+      context: .
+      dockerfile: terminal.Dockerfile
+    volumes:
+    - .:/var/workspace
+    working_dir: /var/workspace
