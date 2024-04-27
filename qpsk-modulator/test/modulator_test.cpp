@@ -11,7 +11,7 @@ namespace {
   using std::vector;
   using testing::IsEmpty;
 
-  TEST(modulator, produces_empty_output_when_input_is_empty) {
+  TEST(modulate, produces_empty_output_when_input_is_empty) {
     vector<char> input{};
     vector<qpsk::symbol_t> symbols{};
     qpsk::modulate(begin(input), end(input), back_inserter(symbols));
