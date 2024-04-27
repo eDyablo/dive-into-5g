@@ -4,7 +4,8 @@ FROM ${IMAGE_REGISTRY:+$IMAGE_REGISTRY/}alpine
 
 RUN apk add --update --no-cache \
   cmake \
-  g++
+  g++ \
+  make
 
 ARG CONTAINER_USER=default
 ARG CONTAINER_USER_GROUP=default
