@@ -1,4 +1,7 @@
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.20.0)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(dive-into-5g)
 
@@ -9,3 +12,4 @@ include_directories(
   "googletest/googletest/include")
 
 add_subdirectory(hello)
+add_subdirectory(qpsk-modulator)
