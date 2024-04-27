@@ -52,3 +52,20 @@ Consider the efficiency of your mapping function, especially if you plan to proc
 
 Design your program with expandability in mind. Later, you might want to add features like pulse
 shaping or modulation parameter configuration (e.g., changing the constellation points).
+
+## Run tests
+
+1. Start terminal
+    ```
+    docker compose run --build terminal
+    ```
+
+2. Configure projects using CMake
+    ```
+    cmake .
+    ```
+
+3. Build and run tests
+    ```
+    make qpsk-modulator-test && bin/qpsk-modulator-test
+    ```
