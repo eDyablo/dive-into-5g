@@ -11,5 +11,4 @@ include_directories(
   "googletest/googlemock/include"
   "googletest/googletest/include")
 
-add_subdirectory(hello)
 add_subdirectory(qpsk-modulator)
