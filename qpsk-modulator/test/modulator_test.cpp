@@ -20,14 +20,14 @@ namespace {
   using std::string;
   using std::tuple;
   using std::vector;
+  using std::views::repeat;
+  using testing::Each;
   using testing::ElementsAreArray;
   using testing::IsEmpty;
+  using testing::SizeIs;
   using testing::Test;
   using testing::Values;
   using testing::WithParamInterface;
-  using testing::SizeIs;
-  using std::views::repeat;
-  using testing::Each;
 
   struct modulate : public Test {
     modulator_t<char> modulator{'0', '1'};
