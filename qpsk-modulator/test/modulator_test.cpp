@@ -25,7 +25,7 @@ namespace {
   using testing::WithParamInterface;
 
   struct modulate : public Test {
-    modulator_t<char> modulator{'0'};
+    modulator_t<char> modulator{'0', '1'};
     vector<symbol_t> symbols{};
   };
 
@@ -66,5 +66,18 @@ namespace {
   INSTANTIATE_TEST_CASE_P(for_odd_bits_sequence, modulate_sequence, Values(
     make_tuple("000", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}}),
     make_tuple("001", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}})
+  ));
+
+  INSTANTIATE_TEST_CASE_P(for_pairs_containing_non_binary_values, modulate_sequence, Values(
+    make_tuple("a0", vector<symbol_t>{}),
+    make_tuple("a1", vector<symbol_t>{}),
+    make_tuple("0b", vector<symbol_t>{}),
+    make_tuple("1b", vector<symbol_t>{}),
+    make_tuple("ab", vector<symbol_t>{}),
+    make_tuple("00a0", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}}),
+    make_tuple("01a1", vector{symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}}),
+    make_tuple("100b", vector{symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}}),
+    make_tuple("111b", vector{symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}}),
+    make_tuple("11ab", vector{symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}})
   ));
 }
