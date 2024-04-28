@@ -35,17 +35,17 @@ namespace {
     EXPECT_THAT(symbols, IsEmpty());
   }
 
-  struct single_pair : public modulate,
+  struct modulate_sequence : public modulate,
     public WithParamInterface<tuple<string, symbol_t>> {
   };
 
-  TEST_P(single_pair, produces_correct_symbol) {
+  TEST_P(modulate_sequence, produces_correct_symbols) {
     auto [input, expected] = GetParam();
     modulator.modulate(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, ElementsAre(expected));
   }
 
-  INSTANTIATE_TEST_CASE_P(modulate, single_pair, Values(
+  INSTANTIATE_TEST_CASE_P(for_a_single_pair, modulate_sequence, Values(
     make_tuple("00", symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}),
     make_tuple("01", symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}),
     make_tuple("10", symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2})
