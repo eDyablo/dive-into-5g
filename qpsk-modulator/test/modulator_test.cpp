@@ -19,8 +19,8 @@ namespace {
   using testing::ElementsAre;
   using testing::IsEmpty;
   using testing::Test;
-  using testing::TestWithParam;
   using testing::Values;
+  using testing::WithParamInterface;
 
   struct modulate : public Test {
     qpsk::modulator_t<char> modulator{'0'};
@@ -33,9 +33,8 @@ namespace {
     EXPECT_THAT(symbols, IsEmpty());
   }
 
-  struct single_pair : public TestWithParam<tuple<string, qpsk::symbol_t>> {
-    qpsk::modulator_t<char> modulator{'0'};
-    vector<qpsk::symbol_t> symbols{};
+  struct single_pair : public modulate,
+    public WithParamInterface<tuple<string, qpsk::symbol_t>> {
   };
 
   TEST_P(single_pair, produces_correct_symbol) {
