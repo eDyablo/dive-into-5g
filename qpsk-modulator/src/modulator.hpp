@@ -1,6 +1,5 @@
 #include <ostream>
 #include <numbers>
-#include <utility>
 
 namespace qpsk {
   struct symbol_t {
@@ -16,7 +15,7 @@ namespace qpsk {
     }
 
     friend std::ostream& operator<<(std::ostream& output, symbol_t const& symbol) {
-      return output << "(I" << symbol.in_phase << ", Q" << symbol.quadrature << ")";
+      return output << "(I" << symbol.in_phase << ",Q" << symbol.quadrature << ")";
     }
   };
 
@@ -29,7 +28,6 @@ namespace qpsk {
 
     template <typename I, typename O>
     void modulate(I first, I last, O destination) const {
-      using std::numbers::sqrt2;
       for (; first != last; ++first) {
         symbol_t symbol;
         symbol.in_phase = modulate(*first);
