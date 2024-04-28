@@ -62,4 +62,9 @@ namespace {
       symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
     })
   ));
+
+  INSTANTIATE_TEST_CASE_P(for_odd_bits_sequence, modulate_sequence, Values(
+    make_tuple("000", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}}),
+    make_tuple("001", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}})
+  ));
 }
