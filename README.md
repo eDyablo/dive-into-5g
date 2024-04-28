@@ -4,6 +4,7 @@
 
 Before start working on the projects please update submodules via following command.
 ```
+git submodule init
 git submodule update
 ```
 
