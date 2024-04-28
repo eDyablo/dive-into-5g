@@ -2,5 +2,6 @@ bin
 cmake_install.cmake
 CMakeCache.txt
 CMakeFiles
+core
 lib
 Makefile
