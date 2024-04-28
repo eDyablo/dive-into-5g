@@ -25,13 +25,12 @@ namespace qpsk {
     template <typename I, typename O>
     void modulate(I first, I last, O destination) const {
       using std::numbers::sqrt2;
-      if (first != last) {
+      for (; first != last; ++first) {
         symbol_t symbol;
-        symbol.in_phase = modulate(*first++);
-        if (first != last) {
-          symbol.quadrature = modulate(*first);
-          *destination = symbol;
-        }
+        symbol.in_phase = modulate(*first);
+        if (++first == last) break;
+        symbol.quadrature = modulate(*first);
+        *destination = symbol;
       }
     }
 

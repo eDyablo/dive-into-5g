@@ -55,4 +55,11 @@ namespace {
     make_tuple("0", vector<symbol_t>{}),
     make_tuple("1", vector<symbol_t>{})
   ));
+
+  INSTANTIATE_TEST_CASE_P(for_multiple_bit_pairs, modulate_sequence, Values(
+    make_tuple("0011", vector{
+      symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2},
+      symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
+    })
+  ));
 }
