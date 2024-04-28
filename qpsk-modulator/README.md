@@ -53,6 +53,18 @@ Consider the efficiency of your mapping function, especially if you plan to proc
 Design your program with expandability in mind. Later, you might want to add features like pulse
 shaping or modulation parameter configuration (e.g., changing the constellation points).
 
+## Run program
+
+1. Build container image (optional)
+    ```
+    docker compose build modulator
+    ```
+
+2. Run providing data via standart input
+    ```
+    echo 00011011 | docker compose run --no-TTY modulator
+    ```
+
 ## Run tests
 
 1. Start terminal

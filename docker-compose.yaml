@@ -7,3 +7,9 @@ services:
     volumes:
     - .:/var/workspace
     working_dir: /var/workspace
+  modulator:
+    build:
+      context: .
+      dockerfile: qpsk-modulator/Dockerfile
+    stdin_open: true
+    tty: true
