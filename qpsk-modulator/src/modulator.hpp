@@ -27,18 +27,18 @@ namespace qpsk {
       using std::numbers::sqrt2;
       if (first != last) {
         symbol_t symbol;
-        if (*first == zero) {
-          symbol.in_phase = 1/sqrt2;
-        } else {
-          symbol.in_phase = -1/sqrt2;
-        }
-        ++first;
-        if (*first == zero) {
-          symbol.quadrature = 1/sqrt2;
-        } else {
-          symbol.quadrature = -1/sqrt2;
-        }
+        symbol.in_phase = modulate(*first++);
+        symbol.quadrature = modulate(*first);
         *destination = symbol;
+      }
+    }
+
+    auto modulate(T const bit) const {
+      using std::numbers::sqrt2;
+      if (bit == zero) {
+        return 1/sqrt2;
+      } else {
+        return -1/sqrt2;
       }
     }
   };
