@@ -8,6 +8,8 @@
 #include "modulator.hpp"
 
 namespace {
+  using qpsk::modulator_t;
+  using qpsk::symbol_t;
   using std::back_inserter;
   using std::begin;
   using std::end;
@@ -23,8 +25,8 @@ namespace {
   using testing::WithParamInterface;
 
   struct modulate : public Test {
-    qpsk::modulator_t<char> modulator{'0'};
-    vector<qpsk::symbol_t> symbols{};
+    modulator_t<char> modulator{'0'};
+    vector<symbol_t> symbols{};
   };
 
   TEST_F(modulate, produces_empty_output_when_input_is_empty) {
@@ -34,7 +36,7 @@ namespace {
   }
 
   struct single_pair : public modulate,
-    public WithParamInterface<tuple<string, qpsk::symbol_t>> {
+    public WithParamInterface<tuple<string, symbol_t>> {
   };
 
   TEST_P(single_pair, produces_correct_symbol) {
@@ -44,8 +46,8 @@ namespace {
   }
 
   INSTANTIATE_TEST_CASE_P(modulate, single_pair, Values(
-    make_tuple("00", qpsk::symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}),
-    make_tuple("01", qpsk::symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}),
-    make_tuple("10", qpsk::symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2})
+    make_tuple("00", symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}),
+    make_tuple("01", symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}),
+    make_tuple("10", symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2})
   ));
 }
