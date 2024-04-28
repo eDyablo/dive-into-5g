@@ -18,7 +18,7 @@ namespace {
   using std::string;
   using std::tuple;
   using std::vector;
-  using testing::ElementsAre;
+  using testing::ElementsAreArray;
   using testing::IsEmpty;
   using testing::Test;
   using testing::Values;
@@ -36,18 +36,18 @@ namespace {
   }
 
   struct modulate_sequence : public modulate,
-    public WithParamInterface<tuple<string, symbol_t>> {
+    public WithParamInterface<tuple<string, vector<symbol_t>>> {
   };
 
   TEST_P(modulate_sequence, produces_correct_symbols) {
     auto [input, expected] = GetParam();
     modulator.modulate(begin(input), end(input), back_inserter(symbols));
-    EXPECT_THAT(symbols, ElementsAre(expected));
+    EXPECT_THAT(symbols, ElementsAreArray(expected));
   }
 
   INSTANTIATE_TEST_CASE_P(for_a_single_pair, modulate_sequence, Values(
-    make_tuple("00", symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}),
-    make_tuple("01", symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}),
-    make_tuple("10", symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2})
+    make_tuple("00", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}}),
+    make_tuple("01", vector{symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}}),
+    make_tuple("10", vector{symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}})
   ));
 }
