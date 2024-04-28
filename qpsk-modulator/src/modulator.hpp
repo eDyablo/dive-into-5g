@@ -1,5 +1,6 @@
 #include <ostream>
 #include <numbers>
+#include <utility>
 
 namespace qpsk {
   struct symbol_t {
@@ -14,10 +15,38 @@ namespace qpsk {
       return output << "(I" << symbol.in_phase << ", Q" << symbol.quadrature << ")";
     }
   };
+
+  template <typename T>
+  struct modulator_t {
+    T const zero;
+
+    modulator_t(T const& zero): zero(zero) {
+    }
+
+    template <typename I, typename O>
+    void modulate(I first, I last, O destination) {
+      using std::numbers::sqrt2;
+      using std::make_pair;
+      if (first != last) {
+        symbol_t symbol;
+        if (*first == zero) {
+          symbol.in_phase = 1/sqrt2;
+        }
+        ++first;
+        if (*first == zero) {
+          symbol.quadrature = 1/sqrt2;
+        } else {
+          symbol.quadrature = -1/sqrt2;
+        }
+        *destination = symbol;
+      }
+    }
+  };
  
   template <typename I, typename O>
   void modulate(I first, I last, O destination) {
     using std::numbers::sqrt2;
+    using std::make_pair;
     if (first != last) {
       *destination = symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2};
     }

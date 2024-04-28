@@ -22,9 +22,16 @@ namespace {
   }
 
   TEST(modulate, produces_one_correct_symbol_for_single_pair_00) {
-    auto input = {"00"};
+    char const input[] = "00";
     vector<qpsk::symbol_t> symbols{};
-    qpsk::modulate(begin(input), end(input), back_inserter(symbols));
+    qpsk::modulator_t('0').modulate(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, ElementsAre(qpsk::symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}));
+  }
+
+  TEST(modulate, produces_one_correct_symbol_for_single_pair_01) {
+    char const input[] = "01";
+    vector<qpsk::symbol_t> symbols{};
+    qpsk::modulator_t('0').modulate(begin(input), end(input), back_inserter(symbols));
+    EXPECT_THAT(symbols, ElementsAre(qpsk::symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}));
   }
 }
