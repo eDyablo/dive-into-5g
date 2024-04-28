@@ -51,9 +51,8 @@ namespace {
     make_tuple("10", vector{symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}})
   ));
 
-  TEST_F(modulate, produces_empty_output_when_input_is_one_bit) {
-    string const input = "0";
-    modulator.modulate(begin(input), end(input), back_inserter(symbols));
-    EXPECT_THAT(symbols, IsEmpty());
-  }
+  INSTANTIATE_TEST_CASE_P(for_a_single_bit, modulate_sequence, Values(
+    make_tuple("0", vector<symbol_t>{}),
+    make_tuple("1", vector<symbol_t>{})
+  ));
 }
