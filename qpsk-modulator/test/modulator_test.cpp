@@ -60,6 +60,12 @@ namespace {
     make_tuple("0011", vector{
       symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2},
       symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
+    }),
+    make_tuple("00011011", vector{
+      symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2},
+      symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2},
+      symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2},
+      symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
     })
   ));
 
