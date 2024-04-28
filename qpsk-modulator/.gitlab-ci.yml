@@ -1,0 +1,16 @@
+build container image:
+  stage: build
+  resource_group: ${CI_PROJECT_NAME} ${CI_COMMIT_BRANCH}
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    DOCKERFILE_CONTEXT: .
+    DOCKERFILE_NAME: qpsk-modulator/Dockerfile
+    KANIKO_EXECUTOR: /kaniko/executor
+  script:
+  - >-
+    $KANIKO_EXECUTOR
+    --no-push
+    ${DOCKERFILE_CONTEXT:+--context="$DOCKERFILE_CONTEXT"}
+    ${DOCKERFILE_NAME:+--dockerfile="$DOCKERFILE_NAME"}
