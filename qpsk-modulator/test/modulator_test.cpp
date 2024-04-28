@@ -22,10 +22,14 @@ namespace {
   using testing::TestWithParam;
   using testing::Values;
 
-  TEST(modulate, produces_empty_output_when_input_is_empty) {
-    vector<char> input{};
+  struct modulate : public Test {
+    qpsk::modulator_t<char> modulator{'0'};
     vector<qpsk::symbol_t> symbols{};
-    qpsk::modulate(begin(input), end(input), back_inserter(symbols));
+  };
+
+  TEST_F(modulate, produces_empty_output_when_input_is_empty) {
+    vector<char> input{};
+    modulator.modulate(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, IsEmpty());
   }
 

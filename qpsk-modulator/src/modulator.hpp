@@ -20,8 +20,7 @@ namespace qpsk {
   struct modulator_t {
     T const zero;
 
-    modulator_t(T const& zero): zero(zero) {
-    }
+    modulator_t(T const& zero): zero(zero) {}
 
     template <typename I, typename O>
     void modulate(I first, I last, O destination) {
@@ -43,12 +42,4 @@ namespace qpsk {
       }
     }
   };
- 
-  template <typename I, typename O>
-  void modulate(I first, I last, O destination) {
-    using std::numbers::sqrt2;
-    if (first != last) {
-      *destination = symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2};
-    }
-  }
 }
