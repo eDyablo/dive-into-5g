@@ -28,8 +28,10 @@ namespace qpsk {
       if (first != last) {
         symbol_t symbol;
         symbol.in_phase = modulate(*first++);
-        symbol.quadrature = modulate(*first);
-        *destination = symbol;
+        if (first != last) {
+          symbol.quadrature = modulate(*first);
+          *destination = symbol;
+        }
       }
     }
 
