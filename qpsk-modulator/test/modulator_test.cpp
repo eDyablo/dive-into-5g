@@ -42,6 +42,7 @@ namespace {
 
   INSTANTIATE_TEST_CASE_P(modulate, single_pair, Values(
     make_tuple("00", qpsk::symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}),
-    make_tuple("01", qpsk::symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2})
+    make_tuple("01", qpsk::symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}),
+    make_tuple("10", qpsk::symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2})
   ));
 }

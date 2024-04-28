@@ -30,6 +30,8 @@ namespace qpsk {
         symbol_t symbol;
         if (*first == zero) {
           symbol.in_phase = 1/sqrt2;
+        } else {
+          symbol.in_phase = -1/sqrt2;
         }
         ++first;
         if (*first == zero) {
