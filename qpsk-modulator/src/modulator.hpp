@@ -26,7 +26,6 @@ namespace qpsk {
     template <typename I, typename O>
     void modulate(I first, I last, O destination) {
       using std::numbers::sqrt2;
-      using std::make_pair;
       if (first != last) {
         symbol_t symbol;
         if (*first == zero) {
@@ -46,7 +45,6 @@ namespace qpsk {
   template <typename I, typename O>
   void modulate(I first, I last, O destination) {
     using std::numbers::sqrt2;
-    using std::make_pair;
     if (first != last) {
       *destination = symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2};
     }
