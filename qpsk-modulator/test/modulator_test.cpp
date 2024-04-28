@@ -4,6 +4,8 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include <ranges>
+#include <string_view>
 
 #include "modulator.hpp"
 
@@ -23,6 +25,9 @@ namespace {
   using testing::Test;
   using testing::Values;
   using testing::WithParamInterface;
+  using testing::SizeIs;
+  using std::views::repeat;
+  using testing::Each;
 
   struct modulate : public Test {
     modulator_t<char> modulator{'0', '1'};
@@ -99,4 +104,12 @@ namespace {
       symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
     })
   ));
+
+  TEST_F(modulate, a_big_sequence_of_repeated_one_bits) {
+    auto const input_size = 1'000'000;
+    auto const input = repeat('1', input_size);
+    modulator.modulate(begin(input), end(input), back_inserter(symbols));
+    EXPECT_THAT(symbols, SizeIs(input_size/2));
+    EXPECT_THAT(symbols, Each(symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}));
+  }
 }
