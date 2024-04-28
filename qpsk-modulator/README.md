@@ -59,11 +59,23 @@ shaping or modulation parameter configuration (e.g., changing the constellation 
     ```
     docker compose build modulator
     ```
-
-2. Run providing data via standart input
-    ```
-    echo 00011011 | docker compose run --no-TTY modulator
-    ```
+2. Run program
+    - Providing data via standard input, expecting result on standard output
+        ```
+        echo 00011011 | docker compose run -T modulator
+        ```
+    - Providing data from a file, expecting result on standard output
+        ```
+        docker compose run -T modulator < input
+        ```
+    - Providing data via standard input, expecting result in specified file
+        ```
+        echo 00011011 | docker compose run -T modulator > result
+        ```
+    - Providing data from a file, expecting result in specified file
+        ```
+        docker compose run -T modulator < input > result
+        ```
 
 ## Run tests
 
