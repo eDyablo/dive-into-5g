@@ -23,7 +23,7 @@ namespace qpsk {
     modulator_t(T const& zero): zero(zero) {}
 
     template <typename I, typename O>
-    void modulate(I first, I last, O destination) {
+    void modulate(I first, I last, O destination) const {
       using std::numbers::sqrt2;
       if (first != last) {
         symbol_t symbol;
