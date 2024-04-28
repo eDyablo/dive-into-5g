@@ -86,4 +86,17 @@ namespace {
     make_tuple("111b", vector{symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}}),
     make_tuple("11ab", vector{symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}})
   ));
+
+  INSTANTIATE_TEST_CASE_P(for_sequance_containing_invalid_pairs, modulate_sequence, Values(
+    make_tuple("01ab10", vector{
+      symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2},
+      symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2},
+    }),
+    make_tuple("00a1010b10ab11", vector{
+      symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2},
+      symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2},
+      symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2},
+      symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
+    })
+  ));
 }
