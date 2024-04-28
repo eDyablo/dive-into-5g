@@ -30,8 +30,8 @@ namespace {
   }
 
   struct single_pair : public TestWithParam<tuple<string, qpsk::symbol_t>> {
-    qpsk::modulator_t<char> modulator = qpsk::modulator_t('0');
-    vector<qpsk::symbol_t> symbols = {};
+    qpsk::modulator_t<char> modulator{'0'};
+    vector<qpsk::symbol_t> symbols{};
   };
 
   TEST_P(single_pair, produces_correct_symbol) {
