@@ -1,7 +1,10 @@
 #include <iostream>
+#include <iterator>
 
 #include "modulator.hpp"
 
 int main() {
-  std::cout << "qpsk-modulator" << std::endl;
+  qpsk::modulator_t<char> modulator{'0', '1'};
+  modulator.modulate(std::istream_iterator<char>(std::cin), std::istream_iterator<char>(),
+    std::ostream_iterator<qpsk::symbol_t>(std::cout, " "));
 }
