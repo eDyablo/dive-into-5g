@@ -15,6 +15,12 @@ jobs:
         git submodule update
     - name: list
       run: ls -R
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: repository
+        path: .
+        retention-days: 1
     # - name: kaniko
     #   run: >-
     #     /kaniko/executor
@@ -25,5 +31,9 @@ jobs:
     - build-container-image
     runs-on: ubuntu-latest
     steps:
+    - name: download
+      uses: actions/download-artifacts@v3
+      with:
+        name: repository
     - name: list
       run: ls -R
