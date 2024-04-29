@@ -23,6 +23,7 @@ jobs:
   list:
     needs:
     - build-container-image
+    runs-on: ubuntu-latest
     steps:
     - name: list
       run: ls -R
