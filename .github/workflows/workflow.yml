@@ -9,6 +9,8 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@master
+    - name: update submodules
+      run: git submodule update
     - name: list
       run: ls -R
     # - name: kaniko
