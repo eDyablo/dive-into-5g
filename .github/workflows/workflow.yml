@@ -8,7 +8,7 @@ jobs:
       image: gcr.io/kaniko-project/executor:debug
     steps:
     - name: checkout
-      uses: actions/checkout
+      uses: actions/checkout@main
     - name: list
       run: ls -R
     - name: kaniko
