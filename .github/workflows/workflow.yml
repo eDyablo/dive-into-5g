@@ -20,3 +20,9 @@ jobs:
     #     /kaniko/executor
     #     --no-push
     #     --dockerfile=qpsk-modulator/Dockerfile
+  list:
+    needs:
+    - build-container-image
+    steps:
+    - name: list
+      run: ls -R
