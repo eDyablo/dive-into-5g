@@ -22,6 +22,7 @@ namespace {
   using std::vector;
   using std::views::repeat;
   using testing::Each;
+  using testing::ElementsAre;
   using testing::ElementsAreArray;
   using testing::IsEmpty;
   using testing::SizeIs;
@@ -111,5 +112,14 @@ namespace {
     modulator.modulate(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, SizeIs(input_size/2));
     EXPECT_THAT(symbols, Each(symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}));
+  }
+
+  TEST_F(modulate, overwrites_destination_symbols) {
+    auto const input = {'0', '1', '1', '0'};
+    auto output = vector{symbol_t{}, symbol_t{}};
+    modulator.modulate(begin(input), end(input), begin(output));
+    EXPECT_THAT(output, ElementsAre(
+      symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2},
+      symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}));
   }
 }

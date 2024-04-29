@@ -35,7 +35,7 @@ namespace qpsk {
           break;
         symbol.quadrature = modulate(*first);
         if (symbol.is_valid()) {
-          *destination = symbol;
+          *destination++ = symbol;
         }
       }
     }
