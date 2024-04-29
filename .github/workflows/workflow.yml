@@ -2,8 +2,7 @@ name: hello
 on: push
 jobs:
   hello:
-    runs-on:
-      group: ubuntu-runners
+    runs-on: ubuntu-latest
     container:
       image: alpine
     steps:
