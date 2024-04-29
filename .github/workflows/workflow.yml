@@ -1,12 +1,14 @@
 name: build qpsk modulator
 on: push
 jobs:
-  build container image:
+  build-container-image:
+    name: build container image
     runs-on: ubuntu-latest
     container:
       image: gcr.io/kaniko-project/executor:debug
     steps:
     - name: kaniko
       run: >-
-        /kaniko/executor --no-push
+        /kaniko/executor
+        --no-push
         --dockerfile=qpsk-modulator/Dockerfile
