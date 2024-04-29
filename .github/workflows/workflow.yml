@@ -2,7 +2,10 @@ name: hello
 on: push
 jobs:
   hello:
-    runs-on: alpine
+    runs-on:
+      group: ubuntu-runners
+    container:
+      image: alpine
     steps:
     - name: hello
       run: echo hello
