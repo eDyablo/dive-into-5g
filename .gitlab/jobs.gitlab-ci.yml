@@ -9,6 +9,17 @@
     KANIKO_DOCKERFILE: Dockerfile
     KANIKO_EXECUTOR: /kaniko/executor
   script:
+  - if [ "$CONTAINER_IMAGE_REGISTRY_USER" -a "$CONTAINER_IMAGE_REGISTRY_PASSWORD" ]; then
+  -
+    - >-
+      CONTAINER_IMAGE_REGISTRY_CREDS=$(
+      echo -n ${CONTAINER_IMAGE_REGISTRY_USER}:${CONTAINER_IMAGE_REGISTRY_PASSWORD} | base64
+      )
+    - >-
+      echo
+      "{\"auths\":{\"${CONTAINER_IMAGE_REGISTRY_HOST}\":{\"auth\":\"${CONTAINER_IMAGE_REGISTRY_CREDS}\"}}}"
+      > /kaniko/.docker/config.json
+  - fi
   - >-
     $KANIKO_EXECUTOR
     --no-push
