@@ -28,4 +28,3 @@
     ${KANIKO_CONTEXT:+--context="$KANIKO_CONTEXT"}
     ${KANIKO_DOCKERFILE:+--dockerfile="$KANIKO_DOCKERFILE"}
     ${KANIKO_EXECUTOR_DESTINATION_OPTIONS:---no-push}
-    
