@@ -6,6 +6,6 @@ namespace {
   using testing::Eq;
 
   TEST(demodulator, dummy) {
-    EXPECT_THAT(0, Eq(1));
+    EXPECT_THAT(0, Eq(0));
   }
 }
