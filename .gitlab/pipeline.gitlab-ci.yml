@@ -1,3 +1,5 @@
-dummy:
-  script:
-  - echo -n
+modulator:
+  trigger:
+    include:
+    - local: qpsk-modulator/.gitlab-ci.yml
+    strategy: depend
