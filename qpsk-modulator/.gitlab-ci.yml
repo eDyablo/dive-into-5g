@@ -1,6 +1,6 @@
 include: .gitlab/jobs.gitlab-ci.yml
 
 build container image:
-  extends: .kaniko build container image job:
+  extends: .kaniko build container image job
   variables:
     KANIKO_DOCKERFILE: qpsk-modulator/Dockerfile
