@@ -1,0 +1,16 @@
+.kaniko build container image job:
+  stage: build
+  resource_group: ${CI_PROJECT_NAME} ${CI_COMMIT_BRANCH}
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    KANIKO_CONTEXT: .
+    KANIKO_DOCKERFILE: Dockerfile
+    KANIKO_EXECUTOR: /kaniko/executor
+  script:
+  - >-
+    $KANIKO_EXECUTOR
+    --no-push
+    ${KANIKO_CONTEXT:+--context="$KANIKO_CONTEXT"}
+    ${KANIKO_DOCKERFILE:+--dockerfile="$KANIKO_DOCKERFILE"}

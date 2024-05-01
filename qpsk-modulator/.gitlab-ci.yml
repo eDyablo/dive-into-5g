@@ -1,16 +1,6 @@
+include: .gitlab/jobs.gitlab-ci.yml
+
 build container image:
-  stage: build
-  resource_group: ${CI_PROJECT_NAME} ${CI_COMMIT_BRANCH}
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
+  extends: .kaniko build container image job:
   variables:
-    DOCKERFILE_CONTEXT: .
-    DOCKERFILE_NAME: qpsk-modulator/Dockerfile
-    KANIKO_EXECUTOR: /kaniko/executor
-  script:
-  - >-
-    $KANIKO_EXECUTOR
-    --no-push
-    ${DOCKERFILE_CONTEXT:+--context="$DOCKERFILE_CONTEXT"}
-    ${DOCKERFILE_NAME:+--dockerfile="$DOCKERFILE_NAME"}
+    KANIKO_DOCKERFILE: qpsk-modulator/Dockerfile
