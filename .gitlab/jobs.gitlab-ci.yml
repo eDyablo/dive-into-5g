@@ -22,6 +22,10 @@
   - fi
   - >-
     $KANIKO_EXECUTOR
-    --no-push
     ${KANIKO_CONTEXT:+--context="$KANIKO_CONTEXT"}
     ${KANIKO_DOCKERFILE:+--dockerfile="$KANIKO_DOCKERFILE"}
+    ${KANIKO_DESTINATIONS:---no-push}
+    ${KANIKO_DESTINATIONS:+--destination=$(for
+    DESTINATION in $KANIKO_DESTINATIONS;
+    do echo --destination=${DESTINATION};
+    done)}
