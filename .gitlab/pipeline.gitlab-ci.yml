@@ -9,3 +9,12 @@ modulator:
     include:
     - local: qpsk-modulator/.gitlab-ci.yml
     strategy: depend
+
+demodulator:
+  rules:
+  - changes:
+    - qpsk-demodulator/**/*
+  trigger:
+    include:
+    - local: qpsk-demodulator/.gitlab-ci.yml
+    strategy: depend
