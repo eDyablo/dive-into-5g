@@ -3,4 +3,5 @@ include: .gitlab/jobs.gitlab-ci.yml
 build container image:
   extends: .kaniko build container image job
   variables:
+    KANIKO_DESTINATIONS: addword/dive-into-5g-modulator
     KANIKO_DOCKERFILE: qpsk-modulator/Dockerfile
