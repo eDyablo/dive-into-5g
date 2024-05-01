@@ -11,3 +11,5 @@ git submodule update
 ## Projects
 
 [QPSK Modulator](/qpsk-modulator/README.md)
+
+[QPSK Demodulator](/qpsk-demodulator/README.md)
