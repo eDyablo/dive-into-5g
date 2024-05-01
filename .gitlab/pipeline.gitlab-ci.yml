@@ -1,0 +1,3 @@
+dummy:
+  script:
+  - echo -n

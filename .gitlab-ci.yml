@@ -1,0 +1,1 @@
+include: .gitlab/pipeline.gitlab-ci.yml
