@@ -21,9 +21,11 @@
       > /kaniko/.docker/config.json
   - fi
   - >-
+    KANIKO_EXECUTOR_DESTINATION_OPTIONS=$(for DESTINATION in $KANIKO_DESTINATIONS;
+    do echo "--destination=${DESTINATION}"; done)
+  - >-
     $KANIKO_EXECUTOR
     ${KANIKO_CONTEXT:+--context="$KANIKO_CONTEXT"}
     ${KANIKO_DOCKERFILE:+--dockerfile="$KANIKO_DOCKERFILE"}
-    ${KANIKO_DESTINATIONS:---no-push}
-    $(for DESTINATION in $KANIKO_DESTINATIONS;
-    do echo "--destination=${DESTINATION}"; done)}
+    ${KANIKO_EXECUTOR_DESTINATION_OPTIONS:---no-push}
+    
