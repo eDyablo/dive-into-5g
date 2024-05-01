@@ -12,3 +12,8 @@ services:
       context: .
       dockerfile: qpsk-modulator/Dockerfile
     stdin_open: true
+  demodulator:
+    build:
+      context: .
+      dockerfile: qpsk-demodulator/Dockerfile
+    stdin_open: true
