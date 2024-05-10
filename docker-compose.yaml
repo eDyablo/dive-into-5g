@@ -17,3 +17,14 @@ services:
       context: .
       dockerfile: qpsk-demodulator/Dockerfile
     stdin_open: true
+  random-bits:
+    image: alpine
+    entrypoint:
+    - sh
+    - -c
+    - |-
+      if [ "$$0" != "sh" ]; then
+        tr -cd '01' </dev/urandom | fold $${0:+-w$$0} | head -n1
+      else
+        tr -cd '01' </dev/urandom
+      fi

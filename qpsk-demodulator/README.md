@@ -1,4 +1,4 @@
-# Basic QPSK Demodulator Implementation (Week #2)
+# Basic QPSK Demodulator Implementation
 
 ## Objective
 
@@ -37,3 +37,68 @@ Ensure your demodulator works seamlessly with the modulator you've developed. It
 ### Understanding Limitations
 
 Recognize that this implementation assumes ideal conditions. In real-world scenarios, noise and other factors complicate demodulation, which can be explored in future projects. By completing this detailed task, you'll deepen your understanding of digital demodulation techniques and further develop your C++ programming skills, setting a solid foundation for exploring more complex communication system simulations.
+
+## Run program
+
+1. Build container image (optional)
+    ```
+    docker-compose build demodulator
+    ```
+2. Run program
+  - Providing data via standard input, expecting result on standard output
+    ```
+    echo '(0.7,0.7)(+0.7,-0.7) (I-0.7,Q+0.7)(I-0.7,-0.7)' | docker-compose run -T demodulator
+    ```
+  - Providing data from a file, expecting result on standard output
+    ```
+    docker-compose run -T demodulator < input
+    ```
+  - Providing data via standard input, expecting result in specified file
+    ```
+    echo '(I0.7,Q0.7)(I0.7,Q-0.7)(I-0.7,Q0.7)(I-0.7,Q-0.7)' | docker-compose run -T demodulator > result
+    ```
+  - Providing data from a file, expecting result in specified file
+    ```
+    docker-compose run -T demodulator < input > result
+    ```
+
+## Integrate with modulator
+
+1. Build container images (optional)
+    ```
+    docker-compose build modulator demodulator
+    ```
+2. Run containers
+  - Providing data via standard input
+    ```
+    echo 01001011010010 | docker-compose run -T modulator | docker-compose run -T demodulator
+    ```
+  - Providing 1000 random bits via standard input
+    ```
+    docker-compose run random-bits 1000 | docker-compose run -T modulator | docker-compose run -T demodulator
+    ```
+  - Providing infinite sequence of random bits via standard input
+    > :warning: You will have to kill running services using another terminal window
+    > ```
+    > docker-compose kill
+    > ```
+    ```
+    docker-compose run random-bits | docker-compose run -T modulator | docker-compose run -T demodulator
+    ```
+
+## Run tests
+
+1. Start terminal
+    ```
+    docker-compose run --build terminal
+    ```
+
+2. Configure projects using CMake
+    ```
+    cmake .
+    ```
+
+3. Build and run tests
+    ```
+    make qpsk-demodulator-test && bin/qpsk-demodulator-test
+    ```

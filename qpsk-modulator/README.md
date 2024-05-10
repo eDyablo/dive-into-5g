@@ -50,22 +50,34 @@ shaping or modulation parameter configuration (e.g., changing the constellation 
     docker-compose build modulator
     ```
 2. Run program
-    - Providing data via standard input, expecting result on standard output
-        ```
-        echo 00011011 | docker-compose run -T modulator
-        ```
-    - Providing data from a file, expecting result on standard output
-        ```
-        docker-compose run -T modulator < input
-        ```
-    - Providing data via standard input, expecting result in specified file
-        ```
-        echo 00011011 | docker-compose run -T modulator > result
-        ```
-    - Providing data from a file, expecting result in specified file
-        ```
-        docker-compose run -T modulator < input > result
-        ```
+  - Providing data via standard input, expecting result on standard output
+    ```
+    echo 00011011 | docker-compose run -T modulator
+    ```
+  - Providing data from a file, expecting result on standard output
+    ```
+    docker-compose run -T modulator < input
+    ```
+  - Providing data via standard input, expecting result in specified file
+    ```
+    echo 00011011 | docker-compose run -T modulator > result
+    ```
+  - Providing data from a file, expecting result in specified file
+    ```
+    docker-compose run -T modulator < input > result
+    ```
+  - Providing 1000 random bits via standard input
+    ```
+    docker-compose run random-bits 1000 | docker-compose run -T modulator
+    ```
+  - Providing infinite sequence of random bits via standard input
+    > :warning: You will have to kill running services using another terminal window
+    > ```
+    > docker-compose kill
+    > ```
+    ```
+    docker-compose run random-bits | docker-compose run -T modulator
+    ```
 
 ## Run tests
 
