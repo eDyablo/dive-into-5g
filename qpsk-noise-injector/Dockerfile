@@ -15,15 +15,15 @@ RUN \
   cmake . \
   && make qpsk-test \
   && bin/qpsk-test \
-  && make qpsk-demodulator-test \
-  && bin/qpsk-demodulator-test
+  && make qpsk-noise-injector-test \
+  && bin/qpsk-noise-injector-test
 
-RUN make qpsk-demodulator
+RUN make qpsk-noise-injector
 
 FROM scratch
 
-COPY --from=build /var/workspace/bin/qpsk-demodulator .
+COPY --from=build /var/workspace/bin/qpsk-noise-injector .
 
 WORKDIR /var/workspace
 
-ENTRYPOINT [ "/qpsk-demodulator" ]
+ENTRYPOINT [ "/qpsk-noise-injector" ]

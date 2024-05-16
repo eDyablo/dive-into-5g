@@ -6,7 +6,7 @@
 #include <ranges>
 #include <sstream>
 
-#include "symbol.hpp"
+#include "qpsk/symbol.hpp"
 
 namespace qpsk {
   struct reader_t {

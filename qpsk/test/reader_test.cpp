@@ -5,8 +5,7 @@
 #include <tuple>
 #include <vector>
 
-#include "reader.hpp"
-#include "symbol.hpp"
+#include "qpsk/reader.hpp"
 
 namespace {
   using namespace std::literals;

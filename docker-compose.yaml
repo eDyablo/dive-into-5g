@@ -28,3 +28,8 @@ services:
       else
         tr -cd '01' </dev/urandom
       fi
+  noise-injector:
+    build:
+      context: .
+      dockerfile: qpsk-noise-injector/Dockerfile
+    stdin_open: true

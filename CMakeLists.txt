@@ -8,8 +8,12 @@ project(dive-into-5g)
 add_subdirectory(googletest)
 
 include_directories(
+  "cxxopts/include"
   "googletest/googlemock/include"
-  "googletest/googletest/include")
+  "googletest/googletest/include"
+  "./")
 
+add_subdirectory(qpsk)
 add_subdirectory(qpsk-modulator)
 add_subdirectory(qpsk-demodulator)
+add_subdirectory(qpsk-noise-injector)

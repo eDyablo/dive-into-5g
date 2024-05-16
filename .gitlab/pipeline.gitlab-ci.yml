@@ -10,6 +10,7 @@ workflow:
 modulator:
   rules:
   - changes:
+    - qpsk/**/*
     - qpsk-modulator/**/*
   trigger:
     include:
@@ -19,8 +20,19 @@ modulator:
 demodulator:
   rules:
   - changes:
+    - qpsk/**/*
     - qpsk-demodulator/**/*
   trigger:
     include:
     - local: qpsk-demodulator/.gitlab-ci.yml
+    strategy: depend
+
+noise-injector:
+  rules:
+  - changes:
+    - qpsk/**/*
+    - qpsk-noise-injector/**/*
+  trigger:
+    include:
+    - local: qpsk-noise-injector/.gitlab-ci.yml
     strategy: depend

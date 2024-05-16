@@ -2,3 +2,6 @@
 	path = googletest
 	url = https://github.com/google/googletest.git
 	ignore = dirty
+[submodule "cxxopts"]
+	path = cxxopts
+	url = https://github.com/jarro2783/cxxopts.git

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iterator>
 
-#include "reader.hpp"
+#include "qpsk/reader.hpp"
 #include "demodulator.hpp"
 
 int main() {

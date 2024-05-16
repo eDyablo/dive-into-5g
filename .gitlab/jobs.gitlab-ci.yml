@@ -1,6 +1,6 @@
 .kaniko build container image job:
   stage: build
-  resource_group: ${CI_PROJECT_NAME} ${CI_COMMIT_BRANCH}
+  resource_group: ${KANIKO_DESTINATIONS}
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]

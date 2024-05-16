@@ -1,6 +1,6 @@
 #pragma once
 
-#include "symbol.hpp"
+#include "qpsk/symbol.hpp"
 
 namespace qpsk {
   template <typename T>

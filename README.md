@@ -13,3 +13,5 @@ git submodule update
 [QPSK Modulator](/qpsk-modulator/README.md)
 
 [QPSK Demodulator](/qpsk-demodulator/README.md)
+
+[QPSK Noise Injector](/qpsk-noise-injector/README.md)

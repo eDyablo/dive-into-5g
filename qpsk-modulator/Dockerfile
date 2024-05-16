@@ -13,6 +13,8 @@ COPY . .
 
 RUN \
   cmake . \
+  && make qpsk-test \
+  && bin/qpsk-test \
   && make qpsk-modulator-test \
   && bin/qpsk-modulator-test
 
