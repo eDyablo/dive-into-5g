@@ -25,7 +25,7 @@ auto get_options(int argc, char const* argv[]) {
     definition.parse_positional({snr_option});
     return options_t{definition.parse(argc, argv)};
   } catch (...) {
-    return options_t{cxxopts::ParseResult{}};
+    return options_t{};
   }
 }
 
