@@ -1,8 +1,8 @@
-#include <iostream>
 #include <cxxopts.hpp>
+#include <iostream>
 
-#include "qpsk/reader.hpp"
 #include "noise_injector.hpp"
+#include "qpsk/reader.hpp"
 
 auto constexpr snr_option = "snr";
 

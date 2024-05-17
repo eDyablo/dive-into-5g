@@ -1,10 +1,10 @@
 #include <gmock/gmock.h>
 #include <iterator>
 #include <numbers>
+#include <ranges>
 #include <string>
 #include <tuple>
 #include <vector>
-#include <ranges>
 
 #include "modulator.hpp"
 

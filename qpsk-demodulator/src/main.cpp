@@ -1,8 +1,8 @@
 #include <iostream>
 #include <iterator>
 
-#include "qpsk/reader.hpp"
 #include "demodulator.hpp"
+#include "qpsk/reader.hpp"
 
 int main() {
   qpsk::reader_t{}.read(std::istream_iterator<char>(std::cin), std::istream_iterator<char>(),
