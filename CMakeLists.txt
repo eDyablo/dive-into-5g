@@ -13,7 +13,8 @@ include_directories(
   "googletest/googletest/include"
   "./")
 
-add_subdirectory(qpsk)
-add_subdirectory(qpsk-modulator)
+add_subdirectory(qpsk-bits-generator)
 add_subdirectory(qpsk-demodulator)
+add_subdirectory(qpsk-modulator)
 add_subdirectory(qpsk-noise-injector)
+add_subdirectory(qpsk)

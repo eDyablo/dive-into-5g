@@ -7,6 +7,15 @@ workflow:
     when: never
   - when: always
 
+bits-generator:
+  rules:
+  - changes:
+    - qpsk-bits-generator/**/*
+  trigger:
+    include:
+    - local: qpsk-bits-generator/.gitlab-ci.yml
+    strategy: depend
+
 modulator:
   rules:
   - changes:

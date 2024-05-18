@@ -11,12 +11,14 @@ services:
     build:
       context: .
       dockerfile: qpsk-modulator/Dockerfile
-    stdin_open: true
   demodulator:
     build:
       context: .
       dockerfile: qpsk-demodulator/Dockerfile
-    stdin_open: true
+  bits-generator:
+    build:
+      context: .
+      dockerfile: qpsk-bits-generator/Dockerfile
   random-bits:
     image: alpine
     entrypoint:
@@ -32,4 +34,3 @@ services:
     build:
       context: .
       dockerfile: qpsk-noise-injector/Dockerfile
-    stdin_open: true
