@@ -1,6 +1,8 @@
 ARG IMAGE_REGISTRY
 
-FROM ${IMAGE_REGISTRY:+$IMAGE_REGISTRY/}alpine as build
+FROM ${IMAGE_REGISTRY:+$IMAGE_REGISTRY/}alpine as base
+
+FROM base as build
 
 RUN apk add --update --no-cache \
   cmake \
@@ -11,13 +13,12 @@ WORKDIR /var/workspace
 
 COPY . .
 
-RUN cmake .
+RUN cmake -DCMAKE_BUILD_TYPE=Release .
+RUN cmake --build .
 
-RUN make
+RUN find bin -name '*-test' | while read test; do $test || exit 1; done
 
-RUN find bin -name '*-test' -exec {} \;
-
-FROM ${IMAGE_REGISTRY:+$IMAGE_REGISTRY/}busybox
+FROM base
 
 COPY --from=build /var/workspace/bin /usr/bin/
 
