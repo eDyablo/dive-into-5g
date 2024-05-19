@@ -34,3 +34,9 @@ services:
     build:
       context: .
       dockerfile: qpsk-noise-injector/Dockerfile
+  workplace:
+    build:
+      context: .
+      dockerfile: workplace.Dockerfile
+    volumes:
+    - .:/var/workspace
