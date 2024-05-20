@@ -36,7 +36,7 @@ int main(int argc, char const* argv[]) {
   auto const options = options_t{argc, argv};
   if (options.finite_repetition()) {
     emit_finite_bits_sequence(options);
-  } else {
+  } else if (options.infinite_repetition()){
     emit_infinite_bits_sequence(options);
   }
 }
