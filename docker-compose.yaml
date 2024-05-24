@@ -19,6 +19,10 @@ services:
     build:
       context: .
       dockerfile: qpsk-bits-generator/Dockerfile
+  ber-calculator:
+    build:
+      context: .
+      dockerfile: qpsk-ber-calculator/Dockerfile
   random-bits:
     image: alpine
     entrypoint:

@@ -18,6 +18,8 @@ git submodule update
 
 [QPSK Noise Injector](/qpsk-noise-injector/README.md)
 
+[QPSK Bit Error Rate Calculator](/qpsk-ber-calculator/README.md)
+
 ## Links
 
 [Container images](https://hub.docker.com/search?q=addword%2Fdive-into-5g)

@@ -44,4 +44,12 @@ noise-injector:
   trigger:
     include:
     - local: qpsk-noise-injector/.gitlab-ci.yml
+
+ber-calculator:
+  rules:
+  - changes:
+    - qpsk-ber-calculator/**/*
+  trigger:
+    include:
+    - local: qpsk-ber-calculator/.gitlab-ci.yml
     strategy: depend
