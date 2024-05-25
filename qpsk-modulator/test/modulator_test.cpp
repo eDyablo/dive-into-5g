@@ -29,39 +29,33 @@ namespace {
   using testing::Values;
   using testing::WithParamInterface;
 
-  struct modulate : public Test {
+  struct modulation : public Test {
     modulator_t<char> modulator{'0', '1'};
     vector<symbol_t> symbols{};
   };
 
-  TEST_F(modulate, produces_empty_output_when_input_is_empty) {
+  TEST_F(modulation, produces_empty_output_when_input_is_empty) {
     vector<char> input{};
     modulator.modulate(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, IsEmpty());
   }
 
-  struct modulate_sequence : public modulate,
+  struct giving_sequence_and_expected_symbols : public modulation,
     public WithParamInterface<tuple<string, vector<symbol_t>>> {
   };
 
-  TEST_P(modulate_sequence, produces_correct_symbols) {
+  TEST_P(giving_sequence_and_expected_symbols, produces_correct_symbols) {
     auto [input, expected] = GetParam();
     modulator.modulate(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, ElementsAreArray(expected));
   }
 
-  INSTANTIATE_TEST_CASE_P(for_a_single_pair, modulate_sequence, Values(
+  INSTANTIATE_TEST_CASE_P(modulation, giving_sequence_and_expected_symbols, Values(
     make_tuple("00", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}}),
     make_tuple("01", vector{symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}}),
-    make_tuple("10", vector{symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}})
-  ));
-
-  INSTANTIATE_TEST_CASE_P(for_a_single_bit, modulate_sequence, Values(
+    make_tuple("10", vector{symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}}),
     make_tuple("0", vector<symbol_t>{}),
-    make_tuple("1", vector<symbol_t>{})
-  ));
-
-  INSTANTIATE_TEST_CASE_P(for_multiple_bit_pairs, modulate_sequence, Values(
+    make_tuple("1", vector<symbol_t>{}),
     make_tuple("0011", vector{
       symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2},
       symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
@@ -71,15 +65,9 @@ namespace {
       symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2},
       symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2},
       symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2},
-    })
-  ));
-
-  INSTANTIATE_TEST_CASE_P(for_odd_bits_sequence, modulate_sequence, Values(
+    }),
     make_tuple("000", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}}),
-    make_tuple("001", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}})
-  ));
-
-  INSTANTIATE_TEST_CASE_P(for_pairs_containing_non_binary_values, modulate_sequence, Values(
+    make_tuple("001", vector{symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}}),
     make_tuple("a0", vector<symbol_t>{}),
     make_tuple("a1", vector<symbol_t>{}),
     make_tuple("0b", vector<symbol_t>{}),
@@ -89,10 +77,7 @@ namespace {
     make_tuple("01a1", vector{symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}}),
     make_tuple("100b", vector{symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}}),
     make_tuple("111b", vector{symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}}),
-    make_tuple("11ab", vector{symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}})
-  ));
-
-  INSTANTIATE_TEST_CASE_P(for_sequance_containing_invalid_pairs, modulate_sequence, Values(
+    make_tuple("11ab", vector{symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}}),
     make_tuple("01ab10", vector{
       symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2},
       symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2},
@@ -105,7 +90,7 @@ namespace {
     })
   ));
 
-  TEST_F(modulate, a_big_sequence_of_repeated_one_bits) {
+  TEST_F(modulation, a_big_sequence_of_repeated_one_bits) {
     auto const input_size = 1'000'000;
     auto const input = repeat('1', input_size);
     modulator.modulate(begin(input), end(input), back_inserter(symbols));
@@ -113,7 +98,7 @@ namespace {
     EXPECT_THAT(symbols, Each(symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}));
   }
 
-  TEST_F(modulate, overwrites_destination_symbols) {
+  TEST_F(modulation, overwrites_destination_symbols) {
     auto const input = {'0', '1', '1', '0'};
     auto output = vector{symbol_t{}, symbol_t{}};
     modulator.modulate(begin(input), end(input), begin(output));
