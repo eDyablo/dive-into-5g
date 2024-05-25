@@ -31,7 +31,7 @@ namespace {
   using testing::Values;
   using testing::WithParamInterface;
 
-  struct demodulate : public Test {
+  struct demodulation : public Test {
     demodulator_t<char> demodulator{'0', '1'};
     stringstream output;
 
@@ -43,45 +43,48 @@ namespace {
     }
   };
 
-  TEST_F(demodulate, produces_empty_output_when_input_is_empty) {
+  TEST_F(demodulation, produces_empty_output_when_input_is_empty) {
     auto const input = vector<symbol_t>{};
     EXPECT_THAT(demodulated(input), IsEmpty());
   }
 
-  struct demodulate_symbol : public demodulate,
+  struct giving_symbols_and_expected_sequence : public demodulation,
     public WithParamInterface<tuple<symbol_t, string>> {
   };
 
-  TEST_P(demodulate_symbol, produces_correct_pair_of_bits) {
+  TEST_P(giving_symbols_and_expected_sequence, produces_correct_pair_of_bits) {
     auto [input, expected] = GetParam();
     EXPECT_THAT(demodulated(std::vector{input}), Eq(expected));
   }
 
-  INSTANTIATE_TEST_CASE_P(for_a_valid_symbol, demodulate_symbol, Values(
+  INSTANTIATE_TEST_CASE_P(demodulation, giving_symbols_and_expected_sequence, Values(
     make_tuple(symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2}, "00"),
     make_tuple(symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2}, "01"),
     make_tuple(symbol_t{in_phase: -1/sqrt2, quadrature: 1/sqrt2}, "10"),
-    make_tuple(symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}, "11")
+    make_tuple(symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2}, "11"),
+    make_tuple(symbol_t{in_phase: 0.1, quadrature: 0.01}, "00"),
+    make_tuple(symbol_t{in_phase: 0.001, quadrature: -0.0001}, "01"),
+    make_tuple(symbol_t{in_phase: -1, quadrature: 10}, "10"),
+    make_tuple(symbol_t{in_phase: -100, quadrature: -1000}, "11")
   ));
 
-  struct demodulate_symbol_produces_empty_sequence : public demodulate,
+  struct giving_single_symbol : public demodulation,
     public WithParamInterface<symbol_t> {
   };
 
-  TEST_P(demodulate_symbol_produces_empty_sequence, test) {
+  TEST_P(giving_single_symbol, produces_empty_sequence) {
     auto const symbol = GetParam();
     EXPECT_THAT(demodulated(std::vector{symbol}), IsEmpty());
   }
 
-  INSTANTIATE_TEST_CASE_P(for_a_symbol_having_zero_component,
-    demodulate_symbol_produces_empty_sequence, Values(
+  INSTANTIATE_TEST_CASE_P(demodulation, giving_single_symbol, Values(
       symbol_t{in_phase: 0, quadrature: 1/sqrt2},
       symbol_t{in_phase: 1/sqrt2, quadrature: 0},
       symbol_t{in_phase: 0, quadrature: 0},
       symbol_t{}
   ));
 
-  TEST_F(demodulate, overwrites_destination_bits) {
+  TEST_F(demodulation, overwrites_destination_bits) {
     auto const source = vector{
       symbol_t{in_phase: 1/sqrt2, quadrature: 1/sqrt2},
       symbol_t{in_phase: 1/sqrt2, quadrature: -1/sqrt2},
@@ -93,14 +96,7 @@ namespace {
     EXPECT_THAT(destination, ElementsAre('0', '0', '0', '1', '1', '0', '1', '1'));
   }
 
-  INSTANTIATE_TEST_CASE_P(for_a_symbol_having_inexact_components_values, demodulate_symbol, Values(
-    make_tuple(symbol_t{in_phase: 0.1, quadrature: 0.01}, "00"),
-    make_tuple(symbol_t{in_phase: 0.001, quadrature: -0.0001}, "01"),
-    make_tuple(symbol_t{in_phase: -1, quadrature: 10}, "10"),
-    make_tuple(symbol_t{in_phase: -100, quadrature: -1000}, "11")
-  ));
-
-  TEST_F(demodulate, a_big_sequence_of_repeated_symbols) {
+  TEST_F(demodulation, a_big_sequence_of_repeated_symbols) {
     auto const amount = 1'000'000;
     auto const symbol = symbol_t{in_phase: -1/sqrt2, quadrature: -1/sqrt2};
     auto const symbols = repeat(symbol, amount);
