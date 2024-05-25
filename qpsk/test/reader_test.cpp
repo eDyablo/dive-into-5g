@@ -21,36 +21,37 @@ namespace {
   using testing::Values;
   using testing::WithParamInterface;
 
-  struct reader_test : public Test {
+  struct reading_test : public Test {
     reader_t reader;
     vector<symbol_t> symbols;
   };
 
-  struct reader_read_produces_no_symbols : public reader_test,
+  struct reading_text_sequence : public reading_test,
     public WithParamInterface<string_view> {
   };
 
-  TEST_P(reader_read_produces_no_symbols, test) {
+  TEST_P(reading_text_sequence, returns_no_symbols) {
     auto const input = GetParam();
     reader.read(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, IsEmpty());
   }
 
-  INSTANTIATE_TEST_CASE_P(for_empty_input, reader_read_produces_no_symbols,
+  INSTANTIATE_TEST_CASE_P(for_empty_input, reading_text_sequence,
     Values("", " ", "\n", "\t", " \n ", " \t ")
   );
 
-  struct reader_read_produces_single_symbol : public reader_test,
+  struct reading_text_sequence_expecting_single_symbol : public reading_test,
     public WithParamInterface<tuple<string_view, symbol_t>> {
   };
 
-  TEST_P(reader_read_produces_single_symbol, test) {
+  TEST_P(reading_text_sequence_expecting_single_symbol, returns_correct_symbol) {
     auto const [input, expected] = GetParam();
     reader.read(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, ElementsAre(expected));
   }
 
-  INSTANTIATE_TEST_CASE_P(for_a_pair_of_comma_delimited_numbers, reader_read_produces_single_symbol,
+  INSTANTIATE_TEST_CASE_P(for_a_pair_of_comma_delimited_numbers,
+    reading_text_sequence_expecting_single_symbol,
     Values(
       make_tuple("0.1,0.2"sv, symbol_t{in_phase: 0.1, quadrature: 0.2}),
       make_tuple("-0.1,0.2"sv, symbol_t{in_phase: -0.1, quadrature: 0.2}),
@@ -59,22 +60,22 @@ namespace {
     )
   );
 
-  INSTANTIATE_TEST_CASE_P(for_a_single_number, reader_read_produces_no_symbols,
+  INSTANTIATE_TEST_CASE_P(for_a_single_number, reading_text_sequence,
     Values("0", "0.1", "0.1," , ",0.1")
   );
 
-  struct reader_read_produces_symbols : public reader_test,
+  struct reading_text_sequence_expecting_symbols : public reading_test,
     public WithParamInterface<tuple<string_view, vector<symbol_t>>> {
   };
 
-  TEST_P(reader_read_produces_symbols, test) {
+  TEST_P(reading_text_sequence_expecting_symbols, returns_expected_symbols) {
     auto const [input, expected] = GetParam();
     reader.read(begin(input), end(input), back_inserter(symbols));
     EXPECT_THAT(symbols, ElementsAreArray(expected));
   }
 
   INSTANTIATE_TEST_CASE_P(for_a_sequence_of_whitespace_separated_blocks_of_comma_delimeted_numbers,
-    reader_read_produces_symbols,
+    reading_text_sequence_expecting_symbols,
     Values(
       make_tuple("0.1,0.2 -0.3,-0.4", vector{
         symbol_t{in_phase: 0.1, quadrature: 0.2}, symbol_t{in_phase: -0.3, quadrature: -0.4}
@@ -89,7 +90,7 @@ namespace {
   );
 
   INSTANTIATE_TEST_CASE_P(for_a_pair_of_comma_delimited_numbers_with_prefixes,
-    reader_read_produces_single_symbol,
+    reading_text_sequence_expecting_single_symbol,
     Values(
       make_tuple("I0.1,Q0.2"sv, symbol_t{in_phase: 0.1, quadrature: 0.2}),
       make_tuple("I-0.1,Q-0.2"sv, symbol_t{in_phase: -0.1, quadrature: -0.2}),
@@ -97,8 +98,9 @@ namespace {
     )
   );
 
-  INSTANTIATE_TEST_CASE_P(for_a_sequence_of_whitespace_separated_blocks_of_comma_delimeted_numbers_in_parenthesis,
-    reader_read_produces_symbols,
+  INSTANTIATE_TEST_CASE_P(
+    for_a_sequence_of_whitespace_separated_blocks_of_comma_delimeted_numbers_in_parenthesis,
+    reading_text_sequence_expecting_symbols,
     Values(
       make_tuple("(0.1,0.2) (0.3,0.4)"sv, vector{
         symbol_t{in_phase: 0.1, quadrature: 0.2}, symbol_t{in_phase: 0.3, quadrature: 0.4},
