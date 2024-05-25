@@ -14,16 +14,16 @@ namespace {
   using testing::Values;
   using testing::WithParamInterface;
 
-  struct given_snr_and_linear : public Test,
+  struct giving_snr_and_linear_factor : public Test,
     public WithParamInterface<tuple<snr_t, float>> {
   };
 
-  TEST_P(given_snr_and_linear, calculates_correct_linear_factor) {
+  TEST_P(giving_snr_and_linear_factor, calculates_correct_linear_factor) {
     auto const [snr, expected_linar] = GetParam();
     EXPECT_THAT(snr.linear(), Eq(expected_linar));
   }
 
-  INSTANTIATE_TEST_CASE_P(snr_id_dB, given_snr_and_linear, Values(
+  INSTANTIATE_TEST_CASE_P(for_snr_id_dB, giving_snr_and_linear_factor, Values(
     make_tuple(0_dB, 1),
     make_tuple(10_dB, 10),
     make_tuple(20_dB, 100),
