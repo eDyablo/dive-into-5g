@@ -19,24 +19,24 @@ namespace {
   using testing::Values;
   using testing::WithParamInterface;
 
-  struct bit_error_calculator : Test {
+  struct bit_error_calculation : Test {
     ber_calculator_t calculator{};
   };
 
-  TEST_F(bit_error_calculator, computes_no_rates_for_empty_input) {
+  TEST_F(bit_error_calculation, computes_no_rates_for_empty_input) {
     EXPECT_THAT(calculator.rates(array<int, 0>{}, array<int, 0>{}), IsEmpty());
   }
 
-  TEST_F(bit_error_calculator, returns_a_single_zero_rate_for_two_identical_single_element_sequences) {
+  TEST_F(bit_error_calculation, returns_a_single_zero_rate_for_two_identical_single_element_sequences) {
     EXPECT_THAT(calculator.rates(array{1}, array{1}), ElementsAre(0));
   }
 
-  TEST_F(bit_error_calculator, returns_a_single_highest_rate_for_two_dissimilar_single_element_sequences) {
+  TEST_F(bit_error_calculation, returns_a_single_highest_rate_for_two_dissimilar_single_element_sequences) {
     EXPECT_THAT(calculator.rates(array{1}, array{2}), ElementsAre(1));
   }
 
   struct giving_numeric_sequences_and_expected_rate :
-    public bit_error_calculator,
+    public bit_error_calculation,
     public WithParamInterface<tuple<vector<int>, vector<int>, float>> {
   };
 
@@ -45,7 +45,7 @@ namespace {
     EXPECT_THAT(calculator.rates(subject, sampling), ElementsAre(rate));
   }
 
-  INSTANTIATE_TEST_CASE_P(bit_error_calculator, giving_numeric_sequences_and_expected_rate,
+  INSTANTIATE_TEST_CASE_P(bit_error_calculation, giving_numeric_sequences_and_expected_rate,
     Values(
       make_tuple(vector{1, 2}, vector{1, 2}, 0),
       make_tuple(vector{1, 2, 3, 4}, vector{1, 2, 3, 0}, 1./4),
@@ -62,7 +62,7 @@ namespace {
   );
 
   struct giving_numeric_sequences_interval_and_expected_rates :
-    public bit_error_calculator,
+    public bit_error_calculation,
     public WithParamInterface<tuple<vector<int>, vector<int>, size_t, vector<float>>> {
   };
 
@@ -71,7 +71,7 @@ namespace {
     EXPECT_THAT(calculator.rates(subject, sampling, interval), ElementsAreArray(rates));
   }
 
-  INSTANTIATE_TEST_CASE_P(bit_error_calculator, giving_numeric_sequences_interval_and_expected_rates,
+  INSTANTIATE_TEST_CASE_P(bit_error_calculation, giving_numeric_sequences_interval_and_expected_rates,
     Values(
       make_tuple(vector{1, 2}, vector{1, 2}, 1, vector{0.0f, 0.0f}),
       make_tuple(vector{1, 2}, vector{2, 2}, 1, vector{1.0f, 0.0f}),
